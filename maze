@@ -1,0 +1,11 @@
+#! /usr/bin/env ruby
+
+require_relative 'lib/maze'
+require_relative 'lib/beam'
+require_relative 'lib/view'
+require_relative 'lib/generator'
+require_relative 'lib/solver'
+
+Generator.new.run
+MazeSolver.new.run
+
