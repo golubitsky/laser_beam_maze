@@ -4,7 +4,7 @@ class Generator
   attr_reader :width, :height, :start_pos
 
   def initialize
-    @output_file = "lib/random_maze.txt"
+    @output_file = ARGV[0]
     @width = rand(1000)
     @height = rand(1000)
     puts "Generating #{width}x#{height} random maze and exporting it to #{@output_file}."

@@ -2,7 +2,7 @@ class Maze
   attr_reader :start_x, :start_y, :start_direction, :width, :height
 
   def initialize
-    @input_file = ARGV[0] || 'lib/test.txt'
+    @input_file = ARGV[0]
     build_maze_from_input_file
   end
 
@@ -17,7 +17,6 @@ class Maze
   private
 
   def build_maze_from_input_file
-    puts "Building maze from #{@input_file}.."
     File.open(@input_file) do |f|
       f.each_with_index do |line, index|
         x, y = line.scan(/\d+/).map(&:to_i)
@@ -42,6 +41,7 @@ class Maze
         end
       end
     end
+    puts "Processed maze from #{@input_file}"
     true
   end
 
