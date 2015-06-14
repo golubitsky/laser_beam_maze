@@ -1,4 +1,6 @@
 class MazeView
+  attr_reader :maze, :beam, :fast_beam
+
   def initialize(maze, beam, fast_beam)
     @maze = maze
     @beam = beam
@@ -6,25 +8,51 @@ class MazeView
     @completed_maze = maze
   end
 
-  def inspect
-    ## TO DO: rethink view logic to be able to print starting character
-    ## without having to store it in the actual maze-grid
-    offset = " " * 3
+  def render
+    maze_view = []
+    @maze.each.with_index do |line, y|
+      str = ''
+      str << padded_y_label(y) # print y-axis label before each line
+      line.each_with_index do |char, x|
+        str << "|"
+        if beam.path[[x,y]]
+          str << "*"
+        elsif [x,y] == [maze.start_x, maze.start_y]
+          str << "#{maze.start_direction}"
+        else
+          char == :empty ? str << "‾" : str << char.to_s
+        end
+      end
+      str << "|"
 
-    y = @maze.height - 1
-    @maze.each do |line|
-      print "#{y} " # print y-axis label before each line
-      y -= 1
-      str = line.map do |char|
-        char == :empty ? "|‾" : "|" + char.to_s
-      end.join('') + "|"
-
-      puts str
+      maze_view << str
     end
-    # print bottom line
-    puts offset + ("‾" * @maze.width).split('').join(' ')
-    # print x-axis labels
-    offset + (0...@maze.width).map(&:to_s).join(' ')
+
+    puts maze_view.reverse
+    print_last_line_of_maze
+    print_x_axis_label
   end
 
+  protected
+
+  def print_last_line_of_maze
+    puts "Y ".center(5) + ("‾" * @maze.width).split('').join(' ')
+  end
+
+  def padded_y_label(n)
+    n.to_s.center(4)
+  end
+
+  def print_x_axis_label
+    digits = [*0..9].cycle
+    top_line = ["  X".center(4)]
+    bottom_line = ["".center(5)]
+    maze.width.times do |n|
+      top_line << digits.next
+    end
+    puts top_line.join(' ')
+
+    tens = (0...(maze.width)).step(10).map { |i| i.to_s + ' ' * 18 }
+    puts "tens".center(5) + tens.join
+  end
 end

@@ -7,11 +7,12 @@ class MazeSolver
     @fast_beam = LaserBeam.new(maze)
     @view = MazeView.new(maze, beam, fast_beam)
     @found_loop = false
+    p ARGV
     @output_file_str = ARGV[1] || 'output.txt'
   end
 
   def run
-    p view
+    puts "Laser is traversing the maze.."
     while beam.can_travel_to_next_square?
       beam.travel_to_next_square!
 
@@ -36,6 +37,7 @@ class MazeSolver
   private
 
   def output_results
+    puts "Saving results to #{@output_file_str}"
     File.open(@output_file_str, 'w+') do |f|
       if @found_loop
         f.puts '-1'

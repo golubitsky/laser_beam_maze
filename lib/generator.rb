@@ -5,8 +5,9 @@ class Generator
 
   def initialize
     @output_file = "lib/random_maze.txt"
-    @width = 10
-    @height = 10
+    @width = rand(1000)
+    @height = rand(1000)
+    puts "Generating #{width}x#{height} random maze and exporting it to #{@output_file}."
     @start_pos = [rand(width), rand(height)]
   end
 
@@ -17,7 +18,7 @@ class Generator
       # starting position
       f.puts("#{start_pos[0]} #{start_pos[1]} #{rand_start_pos}")
       # mirrors
-      rand(30).times do
+      rand(@width + @height).times do
         pos = [rand(width), rand(height)]
         pos = [rand(width), rand(height)] while pos == start_pos
 

@@ -1,11 +1,41 @@
 #! /usr/bin/env ruby
+require 'optparse'
 
 require_relative 'lib/maze'
 require_relative 'lib/beam'
 require_relative 'lib/view'
 require_relative 'lib/generator'
 require_relative 'lib/solver'
+require_relative 'lib/exceptions'
 
-Generator.new.run
-MazeSolver.new.run
+
+class LazerMaze
+  def initialize
+    @start_time = Time.new
+    parse_arguments
+  end
+
+  def parse_arguments
+    OptionParser.new do |opts|
+      opts.on('-g', '--generate NAME', 'file name') do |v|
+        p ARGV
+        Generator.new.run
+      end
+    end.parse!
+  end
+
+  def run
+    p ARGV
+    begin
+      solver = MazeSolver.new
+      solver.run
+      # solver.view.render
+    rescue ZeroDimensionMazeError => e
+      puts e.message
+    end
+    puts "LaserMaze completed in #{((Time.now - @start_time) * 1000).round(2)} ms"
+  end
+end
+
+LazerMaze.new.run
 

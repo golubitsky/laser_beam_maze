@@ -11,17 +11,21 @@ class Maze
   end
 
   def each(&block)
-    @grid.reverse.each(&block)
+    @grid.each(&block)
   end
 
   private
 
   def build_maze_from_input_file
+    puts "Building maze from #{@input_file}.."
     File.open(@input_file) do |f|
       f.each_with_index do |line, index|
         x, y = line.scan(/\d+/).map(&:to_i)
 
         if index == 0
+          if x == 0 || y == 0
+            raise ZeroDimensionMazeError
+          end
           @width = x
           @height = y
           build_grid(x, y)
@@ -30,7 +34,6 @@ class Maze
           if direction
             @start_y = y
             @start_x = x
-            @grid[y][x] = direction.intern
             @start_direction = direction.intern
           end
 
@@ -39,6 +42,7 @@ class Maze
         end
       end
     end
+    true
   end
 
   def build_grid(x, y)

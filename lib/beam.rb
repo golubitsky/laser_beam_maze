@@ -2,7 +2,7 @@ class LaserBeam
   FORWARD_MIRROR = { E: :N, N: :E, S: :W, W: :S }
   BACKWARD_MIRROR = { W: :N, N: :W, S: :E, E: :S }
 
-  attr_reader :current_x, :current_y, :square_count, :last_x, :last_y
+  attr_reader :maze, :current_x, :current_y, :square_count, :path
 
   def initialize(maze)
     @maze = maze
@@ -11,6 +11,7 @@ class LaserBeam
     @direction = maze.start_direction
     @square_count = 0
     @last_coordinate
+    @path = {}
   end
 
   def can_travel_to_next_square?
@@ -18,13 +19,23 @@ class LaserBeam
   end
 
   def travel_to_next_square!
-    remember_last_position
     move_one_square
 
     if in_bounds?
+      record_current_position_in_path
       increment_square_counter
       change_direction_if_necessary
     end
+  end
+
+  def last_x
+    return path.keys.last[0] if path.keys.last
+    maze.start_x
+  end
+
+  def last_y
+    return path.keys.last[1] if path.keys.last
+    maze.start_y
   end
 
   private
@@ -33,8 +44,8 @@ class LaserBeam
     (0...@maze.width) === @current_x && (0...@maze.height) === @current_y
   end
 
-  def remember_last_position
-    @last_x, @last_y = @current_x, @current_y
+  def record_current_position_in_path
+    @path[[@current_x, @current_y]] = true
   end
 
   def move_one_square
