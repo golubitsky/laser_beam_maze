@@ -1,56 +1,7 @@
 #! /usr/bin/env ruby
 require 'optparse'
 
-require_relative 'lib/maze'
-require_relative 'lib/beam'
-require_relative 'lib/view'
-require_relative 'lib/generator'
-require_relative 'lib/solver'
-require_relative 'lib/exceptions'
+Dir['./lib/*.rb'].each{ |f| require f }
 
-
-class LazerMaze
-  ERRORS = [FileNamesMissingError,
-            InputFileMissingError,
-            OutputDirectoryError,
-            ZeroDimensionMazeError]
-
-  def initialize
-    @start_time = Time.new
-    parse_options
-  end
-
-  def parse_options
-    OptionParser.new do |opts|
-      opts.on('-g') do |v|
-        Generator.new.run
-      end
-    end.parse!
-  end
-
-  def valid_arguments_provided?
-    begin
-      raise FileNamesMissingError unless ARGV[0] && ARGV[1]
-      raise InputFileMissingError unless File.exists?(ARGV[0])
-      dir = ARGV[1].split('/')
-      dir.pop
-      raise OutputDirectoryError unless File.directory?(dir.join('/'))
-    end
-  end
-
-  def run
-    begin
-      valid_arguments_provided?
-      solver = MazeSolver.new
-      solver.run
-      # solver.view.render
-    rescue *ERRORS => e
-      puts e.message
-      return
-    end
-    puts "LaserMaze completed in #{((Time.now - @start_time) * 1000).round(2)} ms"
-  end
-end
-
-LazerMaze.new.run
+LaserMaze::Program.new.run
 

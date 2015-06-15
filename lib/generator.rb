@@ -1,5 +1,5 @@
 class Generator
-  STARTING_POSITIONS = [:N, :E, :S, :W]
+  STARTING_POSITIONS = [:N, :E, :S, :W].freeze
 
   attr_reader :width, :height, :start_pos
 
