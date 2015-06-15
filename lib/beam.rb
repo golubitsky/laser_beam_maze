@@ -32,7 +32,7 @@ module LaserMaze
     [:x, :y].each_with_index do |axis, i|
       define_method('last_' + axis.to_s) do
         return path.keys.last[i] if path.keys.last
-        maze['start_' + axis] # allow starting position at wall, facing the wall
+        maze.send('start_' + axis.to_s) # allow starting position at wall, facing the wall
       end
     end
 

@@ -1,3 +1,4 @@
+require 'byebug'
 module LaserMaze
   class Program
     def initialize
@@ -6,17 +7,13 @@ module LaserMaze
     end
 
     def parse_options
-      OptionParser.new do |opts|
-        opts.on('-g') do |v|
-          LaserMaze::Generator.new.run
-        end
+      return if ARGV[0] =~ /\.\//
+      opts = {}
+      ARGV[0].chars{ |char| opts[char] = true }
+      ARGV.shift
 
-        opts.on('-r') do |v|
-          @render = true
-        end
-
-
-      end.parse!
+      @render = true if opts['r']
+      LaserMaze::Generator.new.run if opts['g']
     end
 
     def valid_arguments_provided?

@@ -1,11 +1,17 @@
 module LaserMaze
   class Maze
-    attr_reader :start_x, :start_y, :start_direction, :width, :height
+    attr_reader :start_x, :start_y, :start_direction
 
     def initialize(width, height)
       @grid = build_grid(width, height)
-      @width = width
-      @height = height
+    end
+
+    def width
+      @grid[0].size
+    end
+
+    def height
+      @grid.size
     end
 
     def [](value)

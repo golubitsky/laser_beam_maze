@@ -10,6 +10,10 @@ module LaserMaze
     end
 
     def render
+      if maze.width > 40
+        puts "Maze too big to render in terminal."
+        return
+      end
       maze_view = []
       @maze.each.with_index do |line, y|
         str = ''
