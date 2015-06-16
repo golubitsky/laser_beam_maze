@@ -1,1 +1,3 @@
-# laser_beam_maze
+# Laser Beam Maze Solver and Generator
+
+

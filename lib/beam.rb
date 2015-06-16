@@ -3,14 +3,13 @@ module LaserMaze
     FORWARD_MIRROR = { E: :N, N: :E, S: :W, W: :S }
     BACKWARD_MIRROR = { W: :N, N: :W, S: :E, E: :S }
 
-    attr_reader :maze, :current_x, :current_y, :square_count, :path
+    attr_reader :maze, :current_x, :current_y, :path
 
     def initialize(maze)
       @maze = maze
       @current_x = maze.start_x
       @current_y = maze.start_y
       @direction = maze.start_direction
-      @square_count = 0
       @last_coordinate
       @path = {}
     end
@@ -24,7 +23,6 @@ module LaserMaze
 
       if in_bounds?
         record_current_position_in_path
-        increment_square_counter
         change_direction_if_necessary
       end
     end
@@ -34,6 +32,14 @@ module LaserMaze
         return path.keys.last[i] if path.keys.last
         maze.send('start_' + axis.to_s) # allow starting position at wall, facing the wall
       end
+    end
+
+    def square_count
+      path.keys.size
+    end
+
+    def ==(other_beam)
+      current_x == other_beam.current_x && current_y == other_beam.current_y
     end
 
     private
@@ -58,10 +64,6 @@ module LaserMaze
       when :W
         @current_x -= 1
       end
-    end
-
-    def increment_square_counter
-      @square_count += 1
     end
 
     def change_direction_if_necessary

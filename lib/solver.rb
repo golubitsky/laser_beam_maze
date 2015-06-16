@@ -13,25 +13,26 @@ module LaserMaze
 
     def run
       puts "Laser is traversing the maze."
+
       while beam.can_travel_to_next_square?
         beam.travel_to_next_square!
-
-        # loop detection
-        # https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare
-
-        2.times do
-          fast_beam.travel_to_next_square! if fast_beam.can_travel_to_next_square?
-        end
-
-        if beam.current_x == fast_beam.current_x &&
-            beam.current_y == fast_beam.current_y &&
-            fast_beam.can_travel_to_next_square?
-          @found_loop = true
-          break
-        end
+        break if in_loop?
       end
 
       output_results
+    end
+
+    def in_loop?
+      # https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare
+      2.times do
+        fast_beam.travel_to_next_square! if fast_beam.can_travel_to_next_square?
+      end
+
+      if beam == fast_beam && fast_beam.can_travel_to_next_square?
+        return @found_loop = true
+      end
+
+      false
     end
 
     private

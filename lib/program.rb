@@ -1,19 +1,22 @@
-require 'byebug'
 module LaserMaze
   class Program
     def initialize
       @start_time = Time.new
-      parse_options
+      @options = parse_options
+
+      # LaserMaze::LOG = LaserMaze::Logger.new
     end
 
     def parse_options
+      options = {}
       return if ARGV[0] =~ /\.\//
-      opts = {}
-      ARGV[0].chars{ |char| opts[char] = true }
+
+      ARGV[0].chars{ |char| options[char] = true }
       ARGV.shift
 
-      @render = true if opts['r']
-      LaserMaze::Generator.new.run if opts['g']
+      @render = true if options['r']
+      LaserMaze::Generator.new.run if options['g']
+      options
     end
 
     def valid_arguments_provided?
@@ -40,6 +43,7 @@ module LaserMaze
         puts e.message
         return
       end
+
       puts "LaserMaze completed in #{((Time.now - @start_time) * 1000).round(2)} ms"
     end
   end

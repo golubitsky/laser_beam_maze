@@ -7,6 +7,7 @@ module LaserMaze
 
   class FileLoadError < RuntimeError
   end
+
   class FileNamesMissingError < FileLoadError
     def message
       "FileNamesMissingError: specify input (1st arg) output (2nd arg) filenames in the following format: ./relative/path/to/file\nAlternatively use -g option to generate a random maze to the first filename provided. Caution: this will overwrite an existing file."

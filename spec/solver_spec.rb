@@ -55,6 +55,31 @@ describe "Solving of valid maze" do
     end
   end
 
+  context "1x1 maze" do
+    before(:all) do
+      input = './spec/test_mazes/at_wall_1x1.txt'
+      @output = random_file_name
+      LaserMaze::Solver.new(input, @output).run
+      @output_file = File.readlines(@output)
+    end
+
+    after(:all) do
+      File.delete(@output)
+    end
+
+    it "yields a file having two lines" do
+      expect(@output_file.length).to be(2)
+    end
+
+    it "determines and outputs correct number of squares traversed by beam" do
+      expect(@output_file[0]).to eq("0\n")
+    end
+
+    it "determines and outputs correct final coordinate of beam" do
+      expect(@output_file[1]).to eq("0 0\n")
+    end
+  end
+
   context "starting in a loop" do
     before(:all) do
       @output_file_strings = []
