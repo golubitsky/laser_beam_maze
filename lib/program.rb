@@ -9,6 +9,26 @@ module LaserMaze
 
     end
 
+    def run
+      if @options[:help]
+        print_help
+        return
+      end
+
+      check_source_and_destination
+
+      LaserMaze::Generator.new.run if options[:generate]
+
+      solver = LaserMaze::Solver.new
+      solver.run
+
+      solver.view.render if @options[:render]
+
+      msg = "LaserMaze completed in #{((Time.now - @start_time) * 1000).round(2)} ms"
+      LaserMaze::Logger.add(msg)
+      LaserMaze::Logger.print if @options[:log]
+    end
+
     def parse_options
       options = {}
       return options if ARGV[0] =~ /\.\//
@@ -34,36 +54,6 @@ module LaserMaze
       dir = ARGV[1].split('/')
       dir.pop
       raise OutputDirectoryError unless File.directory?(dir.join('/'))
-    end
-
-    def run
-      if @options[:help]
-        print_help
-        return
-      end
-
-      LaserMaze::Generator.new.run if options[:generate]
-
-      begin
-        check_source_and_destination
-      rescue FileLoadError => e
-        puts e.message
-        return
-      end
-
-      begin
-        solver = LaserMaze::Solver.new
-        solver.run
-      rescue ZeroDimensionMazeError => e
-        puts e.message
-        return
-      end
-
-      solver.view.render if @options[:render]
-
-      msg = "LaserMaze completed in #{((Time.now - @start_time) * 1000).round(2)} ms"
-      LaserMaze::Logger.add(msg)
-      LaserMaze::Logger.print if @options[:log]
     end
 
     def print_help

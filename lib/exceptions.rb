@@ -1,10 +1,4 @@
 module LaserMaze
-  class ZeroDimensionMazeError < RuntimeError
-    def message
-      "ZeroDimensionMazeError: unable to build maze when either dimension is 0. Exiting."
-    end
-  end
-
   class FileLoadError < RuntimeError
   end
 
@@ -16,13 +10,19 @@ module LaserMaze
 
   class InputFileMissingError < FileLoadError
     def message
-      "InputFileMissingError: please check the path."
+      "InputFileMissingError: please check the path. Try \"./maze help\""
     end
   end
 
   class OutputDirectoryError < FileLoadError
     def message
-      "OutputDirectoryError: please check the path."
+      "OutputDirectoryError: please check the path. Try \"./maze help\""
+    end
+  end
+
+  class ZeroDimensionMazeError < RuntimeError
+    def message
+      "ZeroDimensionMazeError: unable to build maze when either dimension is 0. Exiting."
     end
   end
 end

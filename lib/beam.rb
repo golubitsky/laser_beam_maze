@@ -10,7 +10,6 @@ module LaserMaze
       @current_x = maze.start_x
       @current_y = maze.start_y
       @direction = maze.start_direction
-      @last_coordinate
       @path = {}
     end
 
@@ -27,6 +26,7 @@ module LaserMaze
       end
     end
 
+    #def last_x && last_y
     [:x, :y].each_with_index do |axis, i|
       define_method('last_' + axis.to_s) do
         return path.keys.last[i] if path.keys.last

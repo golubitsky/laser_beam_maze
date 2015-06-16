@@ -4,10 +4,10 @@ module LaserMaze
 
     attr_reader :width, :height, :start_pos
 
-    def initialize
+    def initialize(max_width = 30, max_height = 30)
       @output_file = ARGV[0]
-      @width = rand(30) + 1
-      @height = rand(30) + 1
+      @width = rand(max_width) + 1
+      @height = rand(max_height) + 1
       @start_pos = [rand(width), rand(height)]
 
       msg = "Generating #{width}x#{height} random maze and exporting it to #{@output_file}."

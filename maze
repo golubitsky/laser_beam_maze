@@ -2,5 +2,10 @@
 
 Dir['./lib/*.rb'].each{ |f| require f }
 
-LaserMaze::Program.new.run
+ERRORS = [LaserMaze::FileLoadError, LaserMaze::ZeroDimensionMazeError]
 
+begin
+  LaserMaze::Program.new.run
+rescue *ERRORS => e
+  puts e.message
+end
