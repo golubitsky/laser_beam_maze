@@ -3,21 +3,24 @@ module LaserMaze
     attr_reader :options
 
     def initialize
-      @start_time = Time.new
       LaserMaze::Logger.init
+      @start_time = Time.new
       @options = parse_options
-
     end
 
     def run
+
       if @options[:help]
         print_help
         return
       end
 
-      check_source_and_destination
+      if options[:generate]
+        raise InputDirectoryError unless valid_directory?(ARGV[0])
+        LaserMaze::Generator.new.run
+      end
 
-      LaserMaze::Generator.new.run if options[:generate]
+      check_source_and_destination
 
       solver = LaserMaze::Solver.new
       solver.run
@@ -51,9 +54,13 @@ module LaserMaze
     def check_source_and_destination
       raise FileNamesMissingError unless ARGV[0] && ARGV[1]
       raise InputFileMissingError unless File.exists?(ARGV[0])
-      dir = ARGV[1].split('/')
+      raise OutputDirectoryError unless valid_directory?(ARGV[1])
+    end
+
+    def valid_directory?(file_str)
+      dir = file_str.split('/')
       dir.pop
-      raise OutputDirectoryError unless File.directory?(dir.join('/'))
+      File.directory?(dir.join('/'))
     end
 
     def print_help

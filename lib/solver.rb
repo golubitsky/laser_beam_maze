@@ -44,7 +44,7 @@ module LaserMaze
           f.puts "#{beam.last_x} #{beam.last_y}"
         end
       end
-      LaserMaze::Logger.add("Results logged to #{@output_file}.")
+      LaserMaze::Logger.add("Results saved to #{@output_file}.")
     end
   end
 end

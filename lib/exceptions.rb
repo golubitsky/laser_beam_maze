@@ -20,6 +20,12 @@ module LaserMaze
     end
   end
 
+  class InputDirectoryError < FileLoadError
+    def message
+      "InputDirectoryError: please check the path. Try \"./maze help\""
+    end
+  end
+
   class ZeroDimensionMazeError < RuntimeError
     def message
       "ZeroDimensionMazeError: unable to build maze when either dimension is 0. Exiting."

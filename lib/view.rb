@@ -15,7 +15,7 @@ module LaserMaze
         puts "Rendering possible for mazes having width <= 30"
         return
       end
-
+      puts ""
       maze_view = []
       @maze.each.with_index do |line, y|
         str = ''
@@ -40,6 +40,7 @@ module LaserMaze
       puts maze_view.reverse
       print_last_line_of_maze
       print_x_axis_label
+      puts ""
     end
 
     protected
