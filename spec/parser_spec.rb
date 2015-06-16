@@ -5,10 +5,6 @@ describe "Parsing" do
       @maze = LaserMaze::Parser.build_maze('./spec/test_mazes/basic.txt')
     end
 
-    specify "does not raise error" do
-      expect{ @maze }.not_to raise_error
-    end
-
     specify "width" do
       expect(@maze.width).to be(5)
     end
