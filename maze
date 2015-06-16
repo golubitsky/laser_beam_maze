@@ -1,5 +1,4 @@
 #! /usr/bin/env ruby
-require 'optparse'
 
 Dir['./lib/*.rb'].each{ |f| require f }
 

@@ -88,7 +88,7 @@ describe "Solving of valid maze" do
   context "starting in a loop" do
     before(:all) do
       @output_file_strings = []
-      2.times do |n|
+      3.times do |n|
         input = "./spec/test_mazes/loop_#{n}.txt"
         @output_file_strings << random_file_name
         LaserMaze::Solver.new(input, @output_file_strings.last).run
