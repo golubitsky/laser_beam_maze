@@ -15,6 +15,8 @@ module LaserMaze
         return
       end
 
+      raise FileNamesMissingError unless ARGV[0] && ARGV[1]
+
       if options[:generate]
         raise InputDirectoryError unless valid_directory?(ARGV[0])
         LaserMaze::Generator.new.run
@@ -52,7 +54,7 @@ module LaserMaze
     end
 
     def check_source_and_destination
-      raise FileNamesMissingError unless ARGV[0] && ARGV[1]
+      raise InputDirectoryError unless valid_directory?(ARGV[0])
       raise InputFileMissingError unless File.exists?(ARGV[0])
       raise OutputDirectoryError unless valid_directory?(ARGV[1])
     end
