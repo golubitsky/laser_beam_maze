@@ -10,19 +10,19 @@ module LaserMaze
 
   class FileNamesMissingError < FileLoadError
     def message
-      "FileNamesMissingError: specify input (1st arg) output (2nd arg) filenames in the following format: ./relative/path/to/file\nAlternatively use -g option to generate a random maze to the first filename provided. Caution: this will overwrite an existing file."
+      "FileNamesMissingError: user must specify input and output files. Try \"./maze help\""
     end
   end
 
   class InputFileMissingError < FileLoadError
     def message
-      "InputFileMissingError: cannot read from file specified. Please check the path.\nAlternatively use -g option to generate a random maze to the first filename provided. Caution: this will overwrite an existing file."
+      "InputFileMissingError: please check the path."
     end
   end
 
   class OutputDirectoryError < FileLoadError
     def message
-      "OutputDirectoryError: Output directory does not exist. Please check the path."
+      "OutputDirectoryError: please check the path."
     end
   end
 end

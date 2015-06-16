@@ -1,17 +1,19 @@
 module LaserMaze
   class Logger
-    def initialize
-      @messages = []
-    end
-
-    def print
-      @messages.each do |msg|
-        puts msg
+    class << self
+      def init
+        @messages = []
       end
-    end
 
-    def add(message)
-      @messages << message
+      def print
+        @messages.each do |msg|
+          puts msg
+        end
+      end
+
+      def add(message)
+        @messages << message
+      end
     end
   end
 end

@@ -10,17 +10,21 @@ module LaserMaze
     end
 
     def render
-      if maze.width > 40
+      if maze.width > 30
         puts "Maze too big to render in terminal."
+        puts "Rendering possible for mazes having width <= 30"
         return
       end
+
       maze_view = []
       @maze.each.with_index do |line, y|
         str = ''
         str << padded_y_label(y) # print y-axis label before each line
         line.each_with_index do |char, x|
           str << "|"
-          if beam.path[[x,y]]
+          if beam.path[[x,y]] && (char == "/" || char == "\\")
+            str << char
+          elsif beam.path[[x,y]]
             str << "*"
           elsif [x,y] == [maze.start_x, maze.start_y]
             str << "#{maze.start_direction}"

@@ -1,6 +1,7 @@
 describe "Parsing" do
   describe "of valid maze" do
     before(:all) do
+      LaserMaze::Logger.init
       @maze = LaserMaze::Parser.build_maze('./spec/test_mazes/basic.txt')
     end
 

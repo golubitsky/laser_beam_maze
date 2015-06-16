@@ -16,7 +16,7 @@ module LaserMaze
             end
           end
         end
-        puts "Processed maze from #{input_file}"
+        LaserMaze::Logger.add("Processed maze from #{input_file}")
         maze
       end
 

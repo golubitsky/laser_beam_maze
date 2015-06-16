@@ -4,7 +4,12 @@ def random_file_name
   ('./' + SecureRandom.base64).gsub(/\W/, '')
 end
 
+
 describe "Solving of valid maze" do
+  before(:all) do
+    LaserMaze::Logger.init
+  end
+
   context "without loop" do
     before(:all) do
       input = './spec/test_mazes/basic.txt'

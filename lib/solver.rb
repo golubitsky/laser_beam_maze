@@ -12,8 +12,6 @@ module LaserMaze
     end
 
     def run
-      puts "Laser is traversing the maze."
-
       while beam.can_travel_to_next_square?
         beam.travel_to_next_square!
         break if in_loop?
@@ -38,7 +36,6 @@ module LaserMaze
     private
 
     def output_results
-      puts "Saving results to #{@output_file}"
       File.open(@output_file, 'w+') do |f|
         if @found_loop
           f.puts '-1'
@@ -47,6 +44,7 @@ module LaserMaze
           f.puts "#{beam.last_x} #{beam.last_y}"
         end
       end
+      LaserMaze::Logger.add("Results logged to #{@output_file}.")
     end
   end
 end
